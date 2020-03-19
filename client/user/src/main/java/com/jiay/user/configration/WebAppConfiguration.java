@@ -1,6 +1,7 @@
 package com.jiay.user.configration;
 
 import com.jiay.user.interceptor.AuthorizationInterceptor;
+import com.jiay.user.interceptor.InternalInterceptor;
 import org.springframework.boot.SpringBootConfiguration;
 import org.springframework.context.annotation.Bean;
 import org.springframework.web.servlet.config.annotation.InterceptorRegistry;
@@ -15,12 +16,16 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 public class WebAppConfiguration implements WebMvcConfigurer {
 
     @Bean
-    public AuthorizationInterceptor getAuthorizationIntercaptor(){
-        return new AuthorizationInterceptor();
+    public InternalInterceptor getInternalInterceptor(){
+        return new InternalInterceptor();
     }
+
+    @Bean
+    public AuthorizationInterceptor getAuthorizationInterceptor() {return new AuthorizationInterceptor();}
 
     @Override
     public void addInterceptors(InterceptorRegistry registry) {
-        registry.addInterceptor(getAuthorizationIntercaptor()).addPathPatterns("/**");
+        registry.addInterceptor(getInternalInterceptor()).addPathPatterns("/**");
+        registry.addInterceptor(getAuthorizationInterceptor()).addPathPatterns("/**");
     }
 }

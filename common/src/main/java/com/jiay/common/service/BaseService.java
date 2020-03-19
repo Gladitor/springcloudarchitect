@@ -28,7 +28,7 @@ public abstract class BaseService {
      * @return
      */
     protected String getToken(String mobile,String password){
-        return MessageDigestUtils.encrypt(mobile+password+ LocalDateTime.now(), Algorithm.SHA1);
+        return MessageDigestUtils.encrypt(mobile+password+ System.currentTimeMillis(), Algorithm.SHA1);
     }
 
 }

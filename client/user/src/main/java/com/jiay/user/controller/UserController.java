@@ -1,17 +1,21 @@
 package com.jiay.user.controller;
 
 import com.jiay.common.controller.BaseController;
+import com.jiay.common.result.Code;
 import com.jiay.common.result.SingleResult;
 import com.jiay.user.model.request.LoginRequest;
 import com.jiay.user.model.request.RegisterRequest;
 import com.jiay.user.model.response.TokenResponse;
 import com.jiay.user.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.util.WebUtils;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
 
 /**
@@ -23,13 +27,20 @@ import javax.validation.Valid;
 @RestController
 public class UserController extends BaseController {
 
+    @Value("${self.data.openid_session_attribute}")
+    private String sessionOpenIdAttribute;
+
     @Autowired
     private UserService userService;
 
     @RequestMapping("login")
-    public SingleResult<TokenResponse> login(@Valid @RequestBody LoginRequest request, BindingResult result){
+    public SingleResult<TokenResponse> login(@Valid @RequestBody LoginRequest request, BindingResult result, HttpServletRequest httpServletRequest){
         validate(result);
-        return userService.login(request);
+        SingleResult<TokenResponse> singleResult = userService.login(request);
+        if(singleResult.getCode() == Code.SUCCESS.getStatus()){
+            WebUtils.setSessionAttribute(httpServletRequest,sessionOpenIdAttribute,singleResult.getData());
+        }
+        return singleResult;
     }
 
     @RequestMapping("register")
