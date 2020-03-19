@@ -1,0 +1,63 @@
+server:
+  port: 8762
+spring:
+  application:
+    name: eurekaclient_user
+  datasource:
+    username: root
+    password: 123
+    url: jdbc:mysql://localhost:3306/oauth_db?zeroDateTimeBehavior=convertToNull&useUnicode=true&characterEncoding=UTF-8&serverTimezone=Asia/Shanghai&autoReconnect=true
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    type: com.zaxxer.hikari.HikariDataSource
+    # hikari 连接池  https://blog.csdn.net/X5fnncxzq4/article/details/80649679
+    hikari:
+      # 自动提交
+      auto-commit: true
+      connection-test-query: SELECT 1
+      # 等待连接池分配连接的最大时长（毫秒），超过这个时长还没可用的连接则发生SQLException， 默认:30秒
+      # 生产环境 connect-time 10 s
+      connection-timeout: 9000
+      # 一个连接idle状态的最大时长（毫秒），超时则被释放（retired），默认:10分钟
+      idle-timeout: 600000
+      # 一个连接的生命时长（毫秒），超时而且没被使用则被释放（retired），默认:30分钟 1800000ms，建议设置比数据库超时时长少60秒，参考MySQL wait_timeout 7200s 参数（# 一个连接的生命时长（毫秒），超时而且没被使用则被释放（retired），默认:30分钟 1800000ms，建议设置比数据库超时时长少60秒，参考MySQL wait_timeout参数（show variables like '%timeout%';） -->  ） -->
+      max-lifetime: 1800000
+      # 连接池中允许的最大连接数。缺省值：10；推荐的公式：((core_count * 2) + effective_spindle_count)
+      maximum-pool-size: 15
+      # 最小连接数
+      minimum-idle: 10
+      # 连接池名字
+      pool-name: IotHikariCP
+  redis:
+    database: 0
+    host: localhost
+    port: 6379
+    password: 123
+    jedis:
+      pool:
+        max-active: -1
+        max-wait: -1
+        max-idle: 8
+        min-idle: 0
+    timeout: 5000
+#自定义数据
+self:
+  data:
+    redis:
+      code:
+        expire: 600
+      access_token:
+        expire: 7200
+      refresh_token:
+        expire: 15552000
+      # 应用内token，-1永不过期不需要判断重置
+      internal_token:
+        expire: 5184000
+      # 应用内token重置过期间隔，用于应用内授权控制，不同应用(业务)对应的过期时间不同。一般应用token从不过期，银行app用一次登陆一次,可以使用这2个参数控制
+      internal_token_reset:
+        expire: 5180000
+    openid_session_attribute: OPENID
+    xxtea_key: $@qwe()*
+eureka:
+  client:
+    serviceUrl:
+      defaultZone: http://localhost:8761/eureka/
