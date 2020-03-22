@@ -1,5 +1,6 @@
 package com.jiay.user.controller;
 
+import com.jiay.common.annotation.AuthToken;
 import com.jiay.common.controller.BaseController;
 import com.jiay.common.result.Code;
 import com.jiay.common.result.SingleResult;
@@ -47,6 +48,12 @@ public class UserController extends BaseController {
     public SingleResult<TokenResponse> register(@Valid @RequestBody RegisterRequest request,BindingResult result){
         validate(result);
         return userService.register(request);
+    }
+
+    @AuthToken
+    @RequestMapping("internalAuthorize")
+    public SingleResult internalAuthorize(){
+        return SingleResult.buildSuccess(Code.SUCCESS,"鉴权成功！");
     }
 
 

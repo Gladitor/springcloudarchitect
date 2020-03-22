@@ -1,0 +1,26 @@
+eureka:
+  client:
+    serviceUrl:
+      defaultZone: http://localhost:8761/eureka/
+server:
+  port: 8763
+spring:
+  application:
+    name: eurekaclientarticle
+# 开启熔断器
+feign:
+  hystrix:
+    enabled: true
+  client:
+    config:
+      default:
+        # 设置超时时间，默认太短调试时会造成重试请求
+        connectTimeout: 60000
+        readTimeout: 60000
+hystrix:
+  command:
+    default:
+      execution:
+        # 设置隔离策略，默认thread，feign请求携带header必须使用semaphore
+        isolation:
+          strategy: SEMAPHORE

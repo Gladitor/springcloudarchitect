@@ -12,11 +12,11 @@
         <module>common</module>
         <module>gateway</module>
         <module>client</module>
-        <module>user</module>
         <module>client/user</module>
+        <module>client/article</module>
     </modules>
     <packaging>pom</packaging>
-    <description>新闻门户网站parent项目，引入公共依赖</description>
+    <description>门户网站parent项目，引入公共依赖</description>
 
     <parent>
         <groupId>org.springframework.boot</groupId>

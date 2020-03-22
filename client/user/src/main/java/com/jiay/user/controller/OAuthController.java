@@ -104,4 +104,9 @@ public class OAuthController extends BaseController {
         }
         return accessTokenOut;
     }
+
+    @RequestMapping("appAuthorize")
+    public SingleResult internalAuthorize(){
+        return SingleResult.buildSuccess(Code.SUCCESS,"鉴权成功！");
+    }
 }
