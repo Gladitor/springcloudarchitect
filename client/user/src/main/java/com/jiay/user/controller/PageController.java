@@ -11,7 +11,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
  * @author jiay
  * @date 2020/3/20
  */
-@RequestMapping("")
+@RequestMapping("oauth2")
 @Controller
 public class PageController extends BaseController {
     @GetMapping("login")

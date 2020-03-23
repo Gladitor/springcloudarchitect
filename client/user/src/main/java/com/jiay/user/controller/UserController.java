@@ -35,13 +35,9 @@ public class UserController extends BaseController {
     private UserService userService;
 
     @RequestMapping("login")
-    public SingleResult<TokenResponse> login(@Valid @RequestBody LoginRequest request, BindingResult result, HttpServletRequest httpServletRequest){
+    public SingleResult<TokenResponse> login(@Valid @RequestBody LoginRequest request, BindingResult result){
         validate(result);
-        SingleResult<TokenResponse> singleResult = userService.login(request);
-        if(singleResult.getCode() == Code.SUCCESS.getStatus()){
-            WebUtils.setSessionAttribute(httpServletRequest,sessionOpenIdAttribute,singleResult.getData());
-        }
-        return singleResult;
+        return userService.login(request);
     }
 
     @RequestMapping("register")
@@ -54,6 +50,16 @@ public class UserController extends BaseController {
     @RequestMapping("internalAuthorize")
     public SingleResult internalAuthorize(){
         return SingleResult.buildSuccess(Code.SUCCESS,"鉴权成功！");
+    }
+
+    @RequestMapping("authorizelogin")
+    public SingleResult<TokenResponse> login(@Valid @RequestBody LoginRequest request, BindingResult result, HttpServletRequest httpServletRequest){
+        validate(result);
+        SingleResult<TokenResponse> singleResult = userService.login(request);
+        if(singleResult.getCode() == Code.SUCCESS.getStatus()){
+            WebUtils.setSessionAttribute(httpServletRequest,sessionOpenIdAttribute,singleResult.getData().getOpenId());
+        }
+        return singleResult;
     }
 
 

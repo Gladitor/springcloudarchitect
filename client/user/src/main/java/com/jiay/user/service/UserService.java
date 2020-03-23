@@ -55,6 +55,7 @@ public class UserService extends BaseService {
             template.opsForValue().set(token+mobile,currentTime.toString());
             TokenResponse response = new TokenResponse();
             response.setToken(token);
+            response.setOpenId(userList.get(0).getOpenid());
             return SingleResult.buildSuccess(response);
         }else {
             return SingleResult.buildFailure(Code.ERROR,"手机号或密码输入不正确！");
@@ -91,6 +92,7 @@ public class UserService extends BaseService {
                         template.opsForValue().set(token+mobile,currentTime.toString());
                         TokenResponse response = new TokenResponse();
                         response.setToken(token);
+                        response.setOpenId(openid);
                         return SingleResult.buildSuccess(response);
                     }else {
                         return SingleResult.buildFailure();
@@ -103,5 +105,6 @@ public class UserService extends BaseService {
             return SingleResult.buildFailure(Code.ERROR,"验证码错误！");
         }
     }
+
 
 }

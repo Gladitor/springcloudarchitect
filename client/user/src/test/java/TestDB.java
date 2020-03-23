@@ -18,7 +18,7 @@ public class TestDB {
     public void test(){
         try {
             LoginRequest request = new LoginRequest();
-            request.setMobile("13800138000");
+            request.setMobile("13566778899");
             request.setPassword("1");
             System.out.println(userService.login(request));
         }catch (Exception e){

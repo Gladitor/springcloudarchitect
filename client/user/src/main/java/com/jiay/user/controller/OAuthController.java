@@ -7,13 +7,17 @@ import com.jiay.user.model.authorize.in.AccessTokenIn;
 import com.jiay.user.model.authorize.in.AuthorizeIn;
 import com.jiay.user.model.authorize.in.RefreshTokenIn;
 import com.jiay.user.model.authorize.out.AccessTokenOut;
+import com.jiay.user.model.request.LoginRequest;
+import com.jiay.user.model.response.TokenResponse;
 import com.jiay.user.service.OAuthService;
+import com.jiay.user.service.UserService;
 import org.apache.commons.lang.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.util.Assert;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.util.WebUtils;
@@ -37,9 +41,10 @@ public class OAuthController extends BaseController {
     @Autowired
     private OAuthService oAuthService;
 
+
     /**
      * 授权页面
-     * 生成code，重定向到response_uri，带上code
+     * 生成code，重定向到response_uri，带上code，response_uri必须http开头
      * 若有state参数，则原样带上state
      * @param authorize
      * @return

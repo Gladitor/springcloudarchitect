@@ -6,18 +6,18 @@ import org.hibernate.validator.constraints.NotBlank;
 
 public class AuthorizeIn extends BaseModel {
 
-    @JsonProperty("response_type")
-    @NotBlank(message = "缺少response_type参数")
+    @JsonProperty("responseType")
+    @NotBlank(message = "缺少responseType参数")
     private String responseType;
 
-    @JsonProperty("client_id")
-    @NotBlank(message = "缺少client_id参数")
+    @JsonProperty("clientId")
+    @NotBlank(message = "缺少clientId参数")
     private String clientId;
 
     private String state;
 
-    @JsonProperty("redirect_uri")
-    @NotBlank(message = "缺少redirect_uri参数")
+    @JsonProperty("redirectUri")
+    @NotBlank(message = "缺少redirectUri参数")
     private String redirectUri;
 
     private String openid;
