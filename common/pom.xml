@@ -13,7 +13,7 @@
     <description>公共模块</description>
 
     <properties>
-        <commons.version>2.6</commons.version>
+        <commons.version>2.7</commons.version>
     </properties>
 
     <dependencies>
